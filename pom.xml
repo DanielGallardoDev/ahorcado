@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.calc</groupId>
-	<artifactId>calculadora</artifactId>
+	<artifactId>ahorcado</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>calculadora</name>
 	<description>Realizar una calculadora</description>
@@ -26,6 +26,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.javatuples</groupId>
+			<artifactId>javatuples</artifactId>
+			<version>1.2</version>
 		</dependency>
 	</dependencies>
 

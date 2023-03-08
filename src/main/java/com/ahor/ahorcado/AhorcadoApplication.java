@@ -1,13 +1,15 @@
-package com.calc.calculadora;
+package com.ahor.ahorcado;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CalculadoraApplication {
+public class AhorcadoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CalculadoraApplication.class, args);
+
+		SpringApplication.run(AhorcadoApplication.class, args);
+
 	}
 
 }
