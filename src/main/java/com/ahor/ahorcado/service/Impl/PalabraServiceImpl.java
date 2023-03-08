@@ -81,13 +81,13 @@ public class PalabraServiceImpl implements PalabraService {
     }
 
     @Override
-    public int contadorIntentosReset() {
-        return numIntentos= MAX_INTENTOS;
+    public void contadorIntentosReset() {
+        numIntentos= MAX_INTENTOS;
     }
 
     @Override
-    public int decrementarIntentos() {
-        return numIntentos--;
+    public void decrementarIntentos() {
+         numIntentos--;
     }
 
     @Override

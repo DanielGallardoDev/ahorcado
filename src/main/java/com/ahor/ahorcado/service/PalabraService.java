@@ -11,7 +11,7 @@ public interface PalabraService {
     boolean comprobarCambiosPalabraOculta( char[] palabraOcultaAntigua, char[] palabraOcultaActual);
     char[] realizarIntento(String palabraPorAdivinar, char[] palabraOculta, String intento);
     int contadorIntentos();
-    int contadorIntentosReset();
-    int decrementarIntentos();
+    void contadorIntentosReset();
+    void decrementarIntentos();
     Pair<String,char[]> obtenerPalabra();
 }

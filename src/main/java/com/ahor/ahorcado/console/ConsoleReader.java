@@ -37,7 +37,7 @@ public class ConsoleReader {
 
             switch (opcion){
                 case 1:
-                    int intentos = palabraService.contadorIntentosReset();
+                    int intentos = palabraService.contadorIntentos();
                     String palabraPorAdivinar = palabraService.obtenerPalabra().getValue0();
                     char[] palabraOculta = palabraService.obtenerPalabra().getValue1();
 
@@ -66,6 +66,7 @@ public class ConsoleReader {
                     } else{
                         System.out.println("Te quedaste sin intentos, prueba a jugar de nuevo.");
                     }
+                    palabraService.contadorIntentosReset();
                     System.out.println();
                     break;
 
