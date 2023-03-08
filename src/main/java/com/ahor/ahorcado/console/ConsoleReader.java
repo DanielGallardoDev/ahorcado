@@ -53,19 +53,14 @@ public class ConsoleReader {
                         intentos = palabraService.contadorIntentos();
 
                         System.out.println(palabraOculta);
+
                         if(!palabraService.comprobarVictoria(palabraPorAdivinar, palabraOculta) && intentos>0){
                             System.out.println(intentos+" intentos restantes");
                         }
                         System.out.println();
                     }
 
-                    if(intentos>0){
-                        System.out.println("¡Enhorabuena! Adivinaste la palabra!");
-                    } else if(intentos<0){
-                        System.out.println("Fallaste la palabra, prueba a jugar de nuevo.");
-                    } else{
-                        System.out.println("Te quedaste sin intentos, prueba a jugar de nuevo.");
-                    }
+                    mensajeFinPartida(intentos);
                     palabraService.contadorIntentosReset();
                     System.out.println();
                     break;
@@ -79,6 +74,16 @@ public class ConsoleReader {
                     System.out.println("Opción no válida");
                     break;
             }
+        }
+    }
+
+    private static void mensajeFinPartida(int intentos) {
+        if(intentos >0){
+            System.out.println("¡Enhorabuena! Adivinaste la palabra!");
+        } else if(intentos <0){
+            System.out.println("Fallaste la palabra, prueba a jugar de nuevo.");
+        } else{
+            System.out.println("Te quedaste sin intentos, prueba a jugar de nuevo.");
         }
     }
 }
