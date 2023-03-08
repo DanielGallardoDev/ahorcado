@@ -1,6 +1,5 @@
 package com.ahor.ahorcado.console;
 
-import com.ahor.ahorcado.repository.PalabraRepository;
 import com.ahor.ahorcado.service.PalabraService;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
@@ -10,13 +9,9 @@ import java.util.Scanner;
 public class ConsoleReader {
 
     PalabraService palabraService;
-    PalabraRepository palabraRepository;
-    IntentosConsole intentosConsole;
 
-    public ConsoleReader(PalabraService palabraService, PalabraRepository palabraRepository, IntentosConsole intentosConsole) {
+    public ConsoleReader(PalabraService palabraService) {
         this.palabraService = palabraService;
-        this.palabraRepository = palabraRepository;
-        this.intentosConsole = intentosConsole;
     }
 
     @PostConstruct
@@ -42,29 +37,33 @@ public class ConsoleReader {
 
             switch (opcion){
                 case 1:
-                    int intentos =intentosConsole.contadorIntentos();
-                    String palabraPorAdivinar = palabraRepository.obtenerPalabra().getValue0();
-                    char[] palabraOculta = palabraRepository.obtenerPalabra().getValue1();
+                    int intentos = palabraService.contadorIntentosReset();
+                    String palabraPorAdivinar = palabraService.obtenerPalabra().getValue0();
+                    char[] palabraOculta = palabraService.obtenerPalabra().getValue1();
 
                     System.out.println("Aquí tienes la palabra a adivinar:");
                     System.out.println(palabraOculta);
 
-                    while(!palabraService.comprobarVictoria(palabraPorAdivinar, palabraOculta) && intentos!=0){
+                    while(!palabraService.comprobarVictoria(palabraPorAdivinar, palabraOculta) && intentos>0){
 
                         System.out.println("Realiza un intento:");
                         String intento = sc.next();
 
-                        palabraOculta= intentosConsole.realizarIntento(palabraPorAdivinar, palabraOculta, intento);
-                        intentos = intentosConsole.contadorIntentos();
+                        palabraOculta= palabraService.realizarIntento(palabraPorAdivinar, palabraOculta, intento);
+                        intentos = palabraService.contadorIntentos();
 
                         System.out.println(palabraOculta);
-                        System.out.println(intentos+" intentos restantes");
+                        if(!palabraService.comprobarVictoria(palabraPorAdivinar, palabraOculta) && intentos>0){
+                            System.out.println(intentos+" intentos restantes");
+                        }
                         System.out.println();
                     }
+
                     if(intentos>0){
                         System.out.println("¡Enhorabuena! Adivinaste la palabra!");
-                    }else{
-                        intentosConsole.contadorIntentosReset();
+                    } else if(intentos<0){
+                        System.out.println("Fallaste la palabra, prueba a jugar de nuevo.");
+                    } else{
                         System.out.println("Te quedaste sin intentos, prueba a jugar de nuevo.");
                     }
                     System.out.println();

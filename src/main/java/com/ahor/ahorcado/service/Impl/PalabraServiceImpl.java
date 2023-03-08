@@ -1,6 +1,8 @@
 package com.ahor.ahorcado.service.Impl;
 
+import com.ahor.ahorcado.repository.PalabraRepository;
 import com.ahor.ahorcado.service.PalabraService;
+import org.javatuples.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -8,6 +10,15 @@ import java.util.Arrays;
 
 @Service
 public class PalabraServiceImpl implements PalabraService {
+
+    private final static int MAX_INTENTOS = 8;
+    private int numIntentos = MAX_INTENTOS;
+
+    PalabraRepository palabraRepository;
+
+    public PalabraServiceImpl(PalabraRepository palabraRepository) {
+        this.palabraRepository = palabraRepository;
+    }
 
     @Override
     public char[] adivinarLetra(String palabraPorAdivinar, char[] palabraOculta,  char letra) {
@@ -28,6 +39,7 @@ public class PalabraServiceImpl implements PalabraService {
            res = palabra.toCharArray();
         } else{
             res= palabraOculta;
+            numIntentos=0;
         }
         return res;
     }
@@ -46,6 +58,41 @@ public class PalabraServiceImpl implements PalabraService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public char[] realizarIntento(String palabraPorAdivinar, char[] palabraOculta, String intento) {
+        char[] res ;
+
+        if(intento.length()>1){
+            res= adivinarPalabra(palabraPorAdivinar, palabraOculta, intento);
+        } else{
+            res= adivinarLetra(palabraPorAdivinar, palabraOculta, intento.charAt(0));
+        }
+        if(comprobarCambiosPalabraOculta(palabraOculta, res)){
+            decrementarIntentos();
+        }
+        return res;
+    }
+
+    @Override
+    public int contadorIntentos() {
+        return numIntentos;
+    }
+
+    @Override
+    public int contadorIntentosReset() {
+        return numIntentos= MAX_INTENTOS;
+    }
+
+    @Override
+    public int decrementarIntentos() {
+        return numIntentos--;
+    }
+
+    @Override
+    public Pair<String, char[]> obtenerPalabra() {
+        return palabraRepository.obtenerPalabra();
     }
 
 

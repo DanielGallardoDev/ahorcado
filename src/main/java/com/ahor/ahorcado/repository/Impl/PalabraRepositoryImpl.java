@@ -13,14 +13,17 @@ public class PalabraRepositoryImpl implements PalabraRepository {
             "teclado","cerveza", "armario", "microscopio"};
 
 
-    List<String> listaPalabras =  Arrays.asList(palabras);
+    private List<String> listaPalabras;
 
+    public PalabraRepositoryImpl() {
+        this.listaPalabras = Arrays.asList(palabras);
+    }
 
     @Override
     public Pair<String,char[]> obtenerPalabra() {
 
-       int max =listaPalabras.size();
-       int id = (int) Math.floor(Math.random()*(0-(max))+(max));
+       int numeroDePalabras =listaPalabras.size();
+       int id = (int) Math.floor(Math.random()*(-(numeroDePalabras))+(numeroDePalabras));  //Numero aleatorio entre  0 y numero de palabras en la lista
 
        String palabraElegida = listaPalabras.get(id);
        char[] palabraOculta = new char[palabraElegida.length()];
